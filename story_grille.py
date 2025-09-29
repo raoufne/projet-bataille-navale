@@ -4,8 +4,8 @@ g = Grille(5, 8)
 print("Grille initiale :")
 print(g)
 try:
-    x = int(input("Entrez la ligne (0-based) : "))
-    y = int(input("Entrez la colonne (0-based) : "))
+    x = int(input("Entrez la ligne : "))
+    y = int(input("Entrez la colonne : "))
 except Exception:
     print("Coordonnées invalides")
     exit()

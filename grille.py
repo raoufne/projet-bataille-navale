@@ -1,7 +1,5 @@
 class Grille:
     def __init__(self, nombre_lignes, nombre_colonnes):
-        if nombre_lignes <= 0 or nombre_colonnes <= 0:
-            raise ValueError("Dimensions doivent être > 0")
         self.nombre_lignes = nombre_lignes
         self.nombre_colonnes = nombre_colonnes
         self.vide = '∿'
@@ -29,6 +27,3 @@ class Grille:
             end = start + self.nombre_colonnes
             lignes.append(''.join(self.matrice[start:end]))
         return '\n'.join(lignes)
-
-    def afficher(self):
-        print(self.__str__())
