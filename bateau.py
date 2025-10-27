@@ -16,3 +16,10 @@ class Bateau:
             for i in range(self.longueur):
                 pos.append((self.ligne, self.colonne + i))
         return pos
+
+    def coule(self, grille):
+        for ligne, colonne in self.positions:
+            index = ligne * grille.nb_colonnes + colonne
+            if grille.liste[index] != 'x':
+                return False
+        return True    

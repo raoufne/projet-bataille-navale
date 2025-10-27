@@ -116,3 +116,8 @@ def test_ajoute_bateau_trop_long():
     g.ajoute(b)
     attendu = ["∿", "∿", "∿", "∿", "∿", "∿"]
     assert g.liste == attendu, "La grille ne doit pas changer pour un bateau trop long"
+
+def test_tir_personnalise():
+    g = Grille(2, 2)
+    g.tirer(0, 1, touche='*')
+    assert g.liste[1] == '*', "Le tir personnalisé n'a pas été appliqué correctement"    

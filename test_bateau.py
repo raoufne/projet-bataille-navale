@@ -1,5 +1,7 @@
 import pytest
 from bateau import Bateau
+from grille import Grille
+
 
 def test_bateau_init_defaults():
     b = Bateau(2, 3)
@@ -24,3 +26,13 @@ def test_positions_vertical_property():
     b = Bateau(2, 3, longueur=3, vertical=True)
     attendu = [(2, 3), (3, 3), (4, 3)]
     assert b.positions == attendu, f"Attendu {attendu}, obtenu {b.positions}"
+
+def test_bateau_coule():
+    g = Grille(2, 3)
+    b = Bateau(1, 0, longueur=2, vertical=False)
+    g.ajoute(b)
+    assert b.coule(g) is False, "Bateau non touché ne doit pas être coulé"
+    g.tirer(1, 0)
+    assert b.coule(g) is False, "Bateau partiellement touché ne doit pas être coulé"
+    g.tirer(1, 1)
+    assert b.coule(g) is True, "Bateau totalement touché doit être coulé"

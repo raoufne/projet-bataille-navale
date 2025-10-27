@@ -5,14 +5,14 @@ class Grille:
         self.nb_colonnes = nb_colonnes
         self.vide = '∿'
         self.touche = 'x'
+        self.bateau_symbole = '⛵'
         self.liste = [self.vide] * (nb_lignes * nb_colonnes)
 
-    def tirer(self, ligne: int, colonne: int):
-        if 0 <= ligne < self.nb_lignes and 0 <= colonne < self.nb_colonnes:
-            index = ligne * self.nb_colonnes + colonne
-            self.liste[index] = self.touche
-        else:
-            raise ValueError(f"Coordonnées hors grille : ({ligne}, {colonne})")
+    def tirer(self, ligne: int, colonne: int, touche: str = None):
+        if touche is None:
+            touche = self.touche
+        index = ligne * self.nb_colonnes + colonne
+        self.liste[index] = touche
         
     def __str__(self):
         result = []
