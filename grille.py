@@ -13,3 +13,10 @@ class Grille:
             self.liste[index] = self.touche
         else:
             raise ValueError(f"Coordonnées hors grille : ({ligne}, {colonne})")
+        
+    def __str__(self):
+        result = []
+        for l in range(self.nb_lignes):
+            ligne = self.liste[l * self.nb_colonnes:(l + 1) * self.nb_colonnes]
+            result.append(''.join(ligne))
+        return '\n'.join(result)

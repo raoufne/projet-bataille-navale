@@ -32,7 +32,6 @@ def test_multiple_instances_are_independent():
         "Les deux grilles partagent les mêmes attributs, ce qui ne devrait pas être le cas."
     )
 
-
 def test_init_liste_vide():
     g = Grille(5, 8)
     assert all(cell == g.vide for cell in g.liste), "Toutes les cases devraient être vierges au départ."
@@ -73,3 +72,28 @@ def test_grille_independante():
     g2 = Grille(2, 2)
     g1.tirer(0, 0)
     assert g2.liste == [g2.vide] * 4, "L'autre grille ne doit pas être affectée"
+
+def test_str_affichage():
+    g = Grille(5, 8)
+
+    # Grille initiale : toutes les cases vierges
+    attendu_initial = ('∿' * 8 + '\n') * 5
+    attendu_initial = attendu_initial.rstrip() 
+    assert str(g) == attendu_initial, "Grille initiale incorrecte"
+
+    # Tir sur la case (2, 3)
+    g.tirer(2, 3)
+
+    # Création de la grille attendue après le tir
+    lignes = []
+    for l in range(5):
+        ligne = []
+        for c in range(8):
+            if l == 2 and c == 3:
+                ligne.append('x')
+            else:
+                ligne.append('∿')
+        lignes.append(''.join(ligne))
+    attendu_apres_tir = '\n'.join(lignes)
+
+    assert str(g) == attendu_apres_tir, "Affichage après tir incorrect"
