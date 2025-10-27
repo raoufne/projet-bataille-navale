@@ -1,11 +1,17 @@
-# VSCode settings
-.vscode/
-
-# Virtual environments
-venv/
+# Virtualenv
 .env/
-
-# Python cache
+.venv/
+venv/
 __pycache__/
-.pytest_cache/
 *.pyc
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# pytest cache
+.pytest_cache/
