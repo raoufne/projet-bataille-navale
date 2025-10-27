@@ -20,3 +20,11 @@ class Grille:
             ligne = self.liste[l * self.nb_colonnes:(l + 1) * self.nb_colonnes]
             result.append(''.join(ligne))
         return '\n'.join(result)
+ 
+    def ajoute(self, bateau):
+        for ligne, colonne in bateau.positions:
+            if not (0 <= ligne < self.nb_lignes and 0 <= colonne < self.nb_colonnes):
+                return
+        for ligne, colonne in bateau.positions:
+            index = ligne * self.nb_colonnes + colonne
+            self.liste[index] = self.bateau_symbole    

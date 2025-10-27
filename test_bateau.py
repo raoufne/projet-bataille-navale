@@ -1,3 +1,4 @@
+import pytest
 from bateau import Bateau
 
 def test_bateau_init_defaults():

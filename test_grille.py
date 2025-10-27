@@ -1,5 +1,6 @@
-from grille import Grille
 import pytest
+from grille import Grille
+from bateau import Bateau
 
 def test_init_basic():
     g = Grille()
@@ -76,15 +77,12 @@ def test_grille_independante():
 def test_str_affichage():
     g = Grille(5, 8)
 
-    # Grille initiale : toutes les cases vierges
     attendu_initial = ('∿' * 8 + '\n') * 5
     attendu_initial = attendu_initial.rstrip() 
     assert str(g) == attendu_initial, "Grille initiale incorrecte"
 
-    # Tir sur la case (2, 3)
     g.tirer(2, 3)
 
-    # Création de la grille attendue après le tir
     lignes = []
     for l in range(5):
         ligne = []
@@ -97,3 +95,24 @@ def test_str_affichage():
     attendu_apres_tir = '\n'.join(lignes)
 
     assert str(g) == attendu_apres_tir, "Affichage après tir incorrect"
+
+def test_ajoute_bateau_horizontal():
+    g = Grille(2, 3)
+    b = Bateau(1, 0, longueur=2, vertical=False)
+    g.ajoute(b)
+    attendu = ["∿", "∿", "∿", "⛵", "⛵", "∿"]
+    assert g.liste == attendu, f"Grille incorrecte après ajout : {g.liste}"
+
+def test_ajoute_bateau_vertical_hors_grille():
+    g = Grille(2, 3)
+    b = Bateau(1, 0, longueur=2, vertical=True)
+    g.ajoute(b)
+    attendu = ["∿", "∿", "∿", "∿", "∿", "∿"]
+    assert g.liste == attendu, "La grille ne doit pas changer pour un bateau hors limite"
+
+def test_ajoute_bateau_trop_long():
+    g = Grille(2, 3)
+    b = Bateau(1, 0, longueur=4, vertical=True)
+    g.ajoute(b)
+    attendu = ["∿", "∿", "∿", "∿", "∿", "∿"]
+    assert g.liste == attendu, "La grille ne doit pas changer pour un bateau trop long"
