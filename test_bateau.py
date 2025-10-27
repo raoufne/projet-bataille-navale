@@ -1,5 +1,5 @@
 import pytest
-from bateau import Bateau
+from bateau import Bateau, PorteAvion, Croiseur, Torpilleur, SousMarin
 from grille import Grille
 
 
@@ -36,3 +36,20 @@ def test_bateau_coule():
     assert b.coule(g) is False, "Bateau partiellement touché ne doit pas être coulé"
     g.tirer(1, 1)
     assert b.coule(g) is True, "Bateau totalement touché doit être coulé"
+
+def test_types_bateaux_sur_grille():
+    g = Grille(5, 5)
+    bateaux = [
+        PorteAvion(0, 0),
+        Croiseur(1, 0),
+        Torpilleur(2, 0),
+        SousMarin(3, 0)
+    ]
+    for b in bateaux:
+        for ligne, colonne in b.positions:
+            index = ligne * g.nb_colonnes + colonne
+            g.liste[index] = b.marque
+    assert g.liste[0] == '🚢', "Porte-avion incorrectement placé"
+    assert g.liste[5] == '⛴', "Croiseur incorrectement placé"
+    assert g.liste[10] == '🚣', "Torpilleur incorrectement placé"
+    assert g.liste[15] == '🐟', "Sous-marin incorrectement placé"    
