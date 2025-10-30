@@ -6,7 +6,7 @@ class Bateau:
         self.longueur = longueur 
         self.vertical = vertical 
         self.marque = marque
-        
+
     @property
     def positions(self):
         pos = []
@@ -21,7 +21,7 @@ class Bateau:
     def coule(self, grille):
         for ligne, colonne in self.positions:
             index = ligne * grille.nb_colonnes + colonne
-            if grille.liste[index] != 'x':
+            if grille.liste[index] != '💣':
                 return False
         return True    
     

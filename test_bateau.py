@@ -32,9 +32,9 @@ def test_bateau_coule():
     b = Bateau(1, 0, longueur=2, vertical=False)
     g.ajoute(b)
     assert b.coule(g) is False, "Bateau non touché ne doit pas être coulé"
-    g.tirer(1, 0)
+    g.tirer(1, 0,  touche='💣')
     assert b.coule(g) is False, "Bateau partiellement touché ne doit pas être coulé"
-    g.tirer(1, 1)
+    g.tirer(1, 1,  touche='💣')
     assert b.coule(g) is True, "Bateau totalement touché doit être coulé"
 
 def test_types_bateaux_sur_grille():

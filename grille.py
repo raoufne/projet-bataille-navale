@@ -3,14 +3,9 @@ class Grille:
     def __init__(self, nb_lignes: int, nb_colonnes: int):
         self.nb_lignes = nb_lignes
         self.nb_colonnes = nb_colonnes
-        self.vide = '∿'
-        self.touche = 'x'
-        self.bateau_symbole = '⛵'
-        self.liste = [self.vide] * (nb_lignes * nb_colonnes)
+        self.liste = ['∿'] * (nb_lignes * nb_colonnes)
 
-    def tirer(self, ligne: int, colonne: int, touche: str = None):
-        if touche is None:
-            touche = self.touche
+    def tirer(self, ligne: int, colonne: int, touche: str = 'x'):
         index = ligne * self.nb_colonnes + colonne
         self.liste[index] = touche
         
@@ -27,4 +22,4 @@ class Grille:
                 return
         for ligne, colonne in bateau.positions:
             index = ligne * self.nb_colonnes + colonne
-            self.liste[index] = self.bateau_symbole    
+            self.liste[index] = '⛵'    
