@@ -1,3 +1,4 @@
+import random
 class Bateau:
 
     def __init__(self, ligne: int, colonne: int, longueur: int = 1, vertical: bool = False, marque: str = '⛵'):
@@ -13,7 +14,7 @@ class Bateau:
         if self.vertical:
             for i in range(self.longueur):
                 pos.append((self.ligne + i, self.colonne))
-        else:  # horizontal
+        else:
             for i in range(self.longueur):
                 pos.append((self.ligne, self.colonne + i))
         return pos
@@ -24,6 +25,35 @@ class Bateau:
             if grille.liste[index] != '💣':
                 return False
         return True    
+
+    def position_alea(self, grille, positions_occupees=None):
+        positions_valides = []
+
+        for ligne in range(grille.nb_lignes):
+            for colonne in range(grille.nb_colonnes):
+                for vertical in [False, True]:
+                    b_temp = type(self)(ligne, colonne, vertical=vertical)
+
+                    if not all(0 <= l < grille.nb_lignes and 0 <= c < grille.nb_colonnes for l, c in b_temp.positions):
+                        continue
+
+                    chevauche = False
+                    for l, c in b_temp.positions:
+                        index = l * grille.nb_colonnes + c
+                        if (l, c) in positions_occupees or grille.liste[index] != '∿':
+                            chevauche = True
+                            break
+
+                    if not chevauche:
+                        positions_valides.append((ligne, colonne, vertical))
+
+        if not positions_valides:
+            raise Exception(f"Impossible de placer le bateau {self.marque} !")
+
+        ligne, colonne, vertical = random.choice(positions_valides)
+        self.ligne = ligne
+        self.colonne = colonne
+        self.vertical = vertical
     
 class PorteAvion(Bateau):
     def __init__(self, ligne, colonne, vertical=False):

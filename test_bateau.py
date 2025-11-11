@@ -53,3 +53,22 @@ def test_types_bateaux_sur_grille():
     assert g.liste[5] == '⛴', "Croiseur incorrectement placé"
     assert g.liste[10] == '🚣', "Torpilleur incorrectement placé"
     assert g.liste[15] == '🐟', "Sous-marin incorrectement placé"    
+
+def test_position_alea():
+    g = Grille(8, 10)
+    b = Bateau(0, 0, longueur=3)
+
+    b.position_alea(g)
+
+    for (l, c) in b.positions:
+        assert 0 <= l < g.nb_lignes
+        assert 0 <= c < g.nb_colonnes
+
+    for (l, c) in b.positions:
+        index = l * g.nb_colonnes + c
+        assert g.liste[index] == g.vide
+
+    if b.vertical:
+        assert b.positions[-1][0] - b.positions[0][0] == b.longueur - 1
+    else:
+        assert b.positions[-1][1] - b.positions[0][1] == b.longueur - 1

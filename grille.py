@@ -22,4 +22,4 @@ class Grille:
                 return
         for ligne, colonne in bateau.positions:
             index = ligne * self.nb_colonnes + colonne
-            self.liste[index] = '⛵'    
+            self.liste[index] = bateau.marque    
