@@ -15,4 +15,6 @@ Thumbs.db
 
 # pytest cache
 .pytest_cache/
-main2.py
+
+data/
+

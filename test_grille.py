@@ -35,7 +35,7 @@ def test_multiple_instances_are_independent():
 
 def test_init_liste_vide():
     g = Grille(5, 8)
-    assert all(cell == '∿' for cell in g.liste), "Toutes les cases devraient être vierges au départ."
+    assert all(cell == g.vide for cell in g.liste), "Toutes les cases devraient être vierges au départ."
 
 
 def test_tirer_case_unique():
@@ -44,12 +44,12 @@ def test_tirer_case_unique():
     index = ligne * g.nb_colonnes + colonne
 
     g.tirer(ligne, colonne)
-    assert g.liste[index] == 'x', "La case tirée devrait contenir le symbole 'x'."
+    assert g.liste[index] == '❌', "La case tirée devrait contenir le symbole 'x'."
 
     # Toutes les autres cases restent vierges
     for i, val in enumerate(g.liste):
         if i != index:
-            assert val == '∿', f"La case {i} devrait rester vierge."
+            assert val == g.vide, f"La case {i} devrait rester vierge."
 
 
 def test_tirer_differentes_positions():
@@ -63,58 +63,58 @@ def test_tirer_differentes_positions():
         for c in range(g.nb_colonnes):
             index = l * g.nb_colonnes + c
             if (l, c) in positions:
-                assert g.liste[index] == 'x', f"Case ({l},{c}) devrait être frappée"
+                assert g.liste[index] == '❌', f"Case ({l},{c}) devrait être frappée"
             else:
-                assert g.liste[index] == '∿', f"Case ({l},{c}) devrait rester vierge"
+                assert g.liste[index] == g.vide, f"Case ({l},{c}) devrait rester vierge"
 
 
 def test_grille_independante():
     g1 = Grille(2, 2)
     g2 = Grille(2, 2)
     g1.tirer(0, 0)
-    assert g2.liste == ['∿'] * 4, "L'autre grille ne doit pas être affectée"
+    assert g2.liste == [g1.vide] * 4, "L'autre grille ne doit pas être affectée"
 
-def test_str_affichage():
+def test_str_affichage_simple():
     g = Grille(5, 8)
 
-    attendu_initial = ('∿' * 8 + '\n') * 5
-    attendu_initial = attendu_initial.rstrip() 
-    assert str(g) == attendu_initial, "Grille initiale incorrecte"
+    texte = str(g)
+
+    lignes = texte.split("\n")
+
+    assert len(lignes) == 1 + 5
+
+    assert lignes[0].strip().startswith("1")
+
+    for i in range(1, 6):
+        assert lignes[i].startswith(chr(ord("A") + (i - 1)))
 
     g.tirer(2, 3)
 
-    lignes = []
-    for l in range(5):
-        ligne = []
-        for c in range(8):
-            if l == 2 and c == 3:
-                ligne.append('x')
-            else:
-                ligne.append('∿')
-        lignes.append(''.join(ligne))
-    attendu_apres_tir = '\n'.join(lignes)
+    texte2 = str(g)
+    lignes2 = texte2.split("\n")
 
-    assert str(g) == attendu_apres_tir, "Affichage après tir incorrect"
+    ligne_C = lignes2[1 + 2] 
+    assert "❌" in ligne_C, "Le symbole ❌ devrait apparaître dans la ligne C"
 
 def test_ajoute_bateau_horizontal():
     g = Grille(2, 3)
     b = Bateau(1, 0, longueur=2, vertical=False)
     g.ajoute(b)
-    attendu = ["∿", "∿", "∿", "⛵", "⛵", "∿"]
+    attendu = [g.vide, g.vide, g.vide, "⛵", "⛵", g.vide]
     assert g.liste == attendu, f"Grille incorrecte après ajout : {g.liste}"
 
 def test_ajoute_bateau_vertical_hors_grille():
     g = Grille(2, 3)
     b = Bateau(1, 0, longueur=2, vertical=True)
     g.ajoute(b)
-    attendu = ["∿", "∿", "∿", "∿", "∿", "∿"]
+    attendu = [g.vide]  * 6
     assert g.liste == attendu, "La grille ne doit pas changer pour un bateau hors limite"
 
 def test_ajoute_bateau_trop_long():
     g = Grille(2, 3)
     b = Bateau(1, 0, longueur=4, vertical=True)
     g.ajoute(b)
-    attendu = ["∿", "∿", "∿", "∿", "∿", "∿"]
+    attendu = [g.vide]  * 6
     assert g.liste == attendu, "La grille ne doit pas changer pour un bateau trop long"
 
 def test_tir_personnalise():

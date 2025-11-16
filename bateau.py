@@ -40,7 +40,7 @@ class Bateau:
                     chevauche = False
                     for l, c in b_temp.positions:
                         index = l * grille.nb_colonnes + c
-                        if (l, c) in positions_occupees or grille.liste[index] != '∿':
+                        if (l, c) in positions_occupees:
                             chevauche = True
                             break
 

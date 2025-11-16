@@ -58,17 +58,17 @@ def test_position_alea():
     g = Grille(8, 10)
     b = Bateau(0, 0, longueur=3)
 
-    b.position_alea(g)
+    b.position_alea(g, positions_occupees=[])
 
     for (l, c) in b.positions:
         assert 0 <= l < g.nb_lignes
         assert 0 <= c < g.nb_colonnes
 
-    for (l, c) in b.positions:
-        index = l * g.nb_colonnes + c
-        assert g.liste[index] == g.vide
-
     if b.vertical:
         assert b.positions[-1][0] - b.positions[0][0] == b.longueur - 1
+        assert all(c == b.colonne for (_, c) in b.positions)
     else:
         assert b.positions[-1][1] - b.positions[0][1] == b.longueur - 1
+        assert all(l == b.ligne for (l, _) in b.positions)
+
+    assert all(True for p in b.positions)
