@@ -1,4 +1,4 @@
-from wcwidth import wcwidth, wcswidth
+from wcwidth import wcswidth
 class Grille:
 
     def __init__(self, nb_lignes: int, nb_colonnes: int):

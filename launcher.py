@@ -21,6 +21,7 @@ while True:
         sys.modules[module_name] = module
         print(f"\n▶️  Lancement de {nom}...\n")
         spec.loader.exec_module(module)
+        break
     else:
         print("❌ Choix invalide !")
 
